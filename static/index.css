@@ -5,18 +5,108 @@ body{
     box-sizing: border-box;
     background-color: cadetblue;
 }
-div{
+
+.header{
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: bisque;
+    width: fit-content;
+    margin-inline: auto;
+    padding: 4px;
+    border-radius: 5px;
+}
+.encapsule{
+    display: flex;
+    margin: 100px;
+    justify-content: center;
+    align-items: center;
+}
+.icon{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     background-color: white;
     border-radius: 100%;
+    border: 0;
+    -webkit-transition: all 0.1s;
+    -moz-transition: all 0.1s;
+    -o-transition: all 0.1s;
+    transition: all 0.1s;
+}
+
+.icon:active {
+    -webkit-transform: translateY(7px);
+    -moz-transform: translateY(7px);
+    -o-transform: translateY(7px);
+    transform: translateY(7px);
+}
+
+.icon:hover{
+    background-color: lightgray;
 }
 
 img{
-    width: 100%;
-    height: 100%;
+    width: 75%;
+    height: 75%;
     object-fit: cover;
+}
+
+
+
+#text-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    margin-inline: 20%;
+    border-radius: 5px;
+    background-color: white;
+    height: fit-content;
+}
+#RF-space{
+    font-size: xx-large;
+    width: 50%;
+    height: min(320px);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/static/images/RF.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+#data1Display, #data2Display{
+    text-align: center;
+ }
+
+#RNF-space{
+    font-size: xx-large;
+    width: 50%;
+    height: min(320px);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/static/images/RNF.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#RF-list, #RNF-list{
+    list-style-type: none;
+    padding-inline: 0;
+    font-size: medium;
+    margin-inline: 10px;
+    padding: 4px;
+    border-radius: 5px;
+}
+
+.RF, .RNF{
+    list-style-type: none;
+    padding-inline: 0;
+    font-size: medium;
+    margin-inline: 10px;
+    margin-bottom: 5px;
+    padding: 4px;
+    border-radius: 5px;
+}
+.RF {
+    background-color: brown;
+}
+.RNF {
+    background-color: cadetblue;
 }
