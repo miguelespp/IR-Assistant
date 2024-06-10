@@ -3,7 +3,7 @@ from classification import classify_requirement
 import openai
 import re
 
-openai.api_key = "sk-proj-6p09H0qwjKqZAYZoejCUT3BlbkFJSFyRvGPw5s6BicVF7Hdk"
+openai.api_key = "TU-KEY-API-XD"
 
 def improve_and_classify_requirements(text):
     sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
