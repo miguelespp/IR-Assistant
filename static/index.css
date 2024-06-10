@@ -110,3 +110,28 @@ img{
 .RNF {
     background-color: cadetblue;
 }
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    z-index: 1000;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.popup ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.popup li {
+    margin-bottom: 10px;
+}
+
+.popup button {
+    margin-left: 5px;
+}
