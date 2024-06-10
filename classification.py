@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = "sk-proj-6p09H0qwjKqZAYZoejCUT3BlbkFJSFyRvGPw5s6BicVF7Hdk"
+openai.api_key = "TU-KEY-API-XD"
 
 def classify_requirement(requirement):
     response = openai.ChatCompletion.create(
