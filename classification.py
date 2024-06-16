@@ -1,9 +1,9 @@
-import openai
+from openai import OpenAI
 
-openai.api_key = "TU-KEY-API-XD"
+client = OpenAI()
 
 def classify_requirement(requirement):
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Eres un experto en clasificación de requisitos."},
@@ -14,7 +14,7 @@ def classify_requirement(requirement):
         stop=None,
         temperature=0.3,  # Reducimos la temperatura para obtener respuestas más precisas
     )
-    classification = response['choices'][0]['message']['content'].strip().upper()
+    classification = response.choices[0].message.content.strip()
     
     if classification in ["RF", "RNF", "NO CLASIFICADO"]:
         return classification

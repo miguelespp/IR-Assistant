@@ -3,4 +3,5 @@
 *.wav
 *.iml
 *.ogg
-__pycache__
+__pycache__/
+.env

@@ -16,7 +16,7 @@ def audio():
         rec = request.files.get("audio")
         rec.save("test.wav")
         
-        modelo = whisper.load_model("medium")
+        modelo = whisper.load_model("small")
         file_path = "test.wav"
         transcription = modelo.transcribe(file_path, language="es")
         
