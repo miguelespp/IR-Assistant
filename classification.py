@@ -2,6 +2,7 @@ from openai import OpenAI
 
 client = OpenAI()
 
+
 def classify_requirement(requirement):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",

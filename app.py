@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 import whisper
-from processing import improve_and_classify_requirements, improve_requirement, sintetizar_requisito
+from processing import improve_and_classify_requirements, analyze_requirement
 
 app = Flask(__name__)
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route("/audio", methods=["POST"])
 def audio():
@@ -37,27 +39,17 @@ def audio():
         print(f"Error procesando el audio: {e}")
         return jsonify({"error": str(e)}), 500
 
-@app.route('/mejorar_requisito', methods=['POST'])
-def mejorar_requisito():
-    data = request.get_json()
-    requirement = data.get('requirement')
-    classification = data.get('classification')
 
-    if not requirement:
-        return jsonify({"result": "error", "message": "No se proporcionó un requisito"}), 400
-
-    improved_requirement = improve_requirement(requirement, classification)
-    return jsonify({"result": "ok", "improved_requirement": improved_requirement})
-
-@app.route('/sintetizar_requisito', methods=['POST'])
-def sintetizar_requisito_endpoint():
+@app.route('/analyze_requisito', methods=['POST'])
+def analyze_requisito_endpoint():
     data = request.get_json()
     requirement = data['requirement']
     try:
-        sintetizado = sintetizar_requisito(requirement)
+        sintetizado = analyze_requirement(requirement)
         return jsonify({"result": "ok", "sintetizado": sintetizado})
     except Exception as e:
         return jsonify({"result": "error", "message": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(debug=True)

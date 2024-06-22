@@ -80,57 +80,31 @@ function mostrarPopup(requirements, classifications) {
     const popup = document.createElement('div');
     popup.className = 'popup';
 
-    const closeButton = document.createElement('button');
-    closeButton.innerText = 'Cerrar';
-    closeButton.addEventListener('click', () => {
-        document.body.removeChild(popup);
-    });
-    popup.appendChild(closeButton);
-
     const list = document.createElement('ul');
+    list.className = 'requirements-list';
     for (let i = 0; i < requirements.length; i++) {
         const listItem = document.createElement('li');
         listItem.dataset.index = i; // Agregamos un atributo de datos para almacenar el índice
 
-        const requirementText = document.createTextNode(`${requirements[i]}`);
-        listItem.appendChild(requirementText);
+        const mainContent = document.createElement('p');
 
-        // Selector para el tipo de requisito
-        const typeSelect = document.createElement('select');
-        const optionRF = document.createElement('option');
-        optionRF.value = 'RF';
-        optionRF.text = 'RF';
-        if (classifications[i] === 'RF') optionRF.selected = true;
+        mainContent.innerText = `${requirements[i]}`
+        listItem.appendChild(mainContent);
 
-        const optionRNF = document.createElement('option');
-        optionRNF.value = 'RNF';
-        optionRNF.text = 'RNF';
-        if (classifications[i] === 'RNF') optionRNF.selected = true;
-
-        typeSelect.appendChild(optionRF);
-        typeSelect.appendChild(optionRNF);
-        typeSelect.addEventListener('change', (event) => {
-            classifications[i] = event.target.value; // Actualizar la clasificación
-        });
-
-        listItem.appendChild(typeSelect);
 
         const addButton = document.createElement('button');
         addButton.innerText = 'Añadir';
         addButton.addEventListener('click', () => {
             agregarRequisito(classifications[i], requirements[i], i);
+            document.body.removeChild(popup);
         });
 
-        const improveButton = document.createElement('button');
-        improveButton.innerText = 'Mejorar';
-        improveButton.addEventListener('click', () => {
-            mejorarRequisito(i, requirements[i], classifications[i]);
-        });
 
-        const sintetizarButton = document.createElement('button');
-        sintetizarButton.innerText = 'Sintetizar';
-        sintetizarButton.addEventListener('click', () => {
-            sintetizarRequisito(requirements[i], i);
+
+        const analyzeButton = document.createElement('button');
+        analyzeButton.innerText = 'Analizar';
+        analyzeButton.addEventListener('click', () => {
+            analyzeRequisito(requirements[i], i);
         });
 
         const editButton = document.createElement('button');
@@ -140,14 +114,14 @@ function mostrarPopup(requirements, classifications) {
         });
 
         const deleteButton = document.createElement('button');
-        deleteButton.innerText = 'Eliminar';
+        deleteButton.innerText = 'Descartar';
         deleteButton.addEventListener('click', () => {
-            eliminarRequisito(i);
+            document.body.removeChild(popup);
         });
 
         listItem.appendChild(addButton);
-        listItem.appendChild(improveButton);
-        listItem.appendChild(sintetizarButton);
+
+        listItem.appendChild(analyzeButton);
         listItem.appendChild(editButton);
         listItem.appendChild(deleteButton);
 
@@ -171,34 +145,8 @@ function agregarRequisito(classification, requirement, index) {
     listItem.parentNode.removeChild(listItem);
 }
 
-function mejorarRequisito(index, requirement, classification) {
-    fetch('/mejorar_requisito', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ requirement: requirement, classification: classification })
-    })
-        .then(response => response.json())
-        .then(data => {
-            if (data.result === "ok") {
-                alert("Requisito mejorado: " + data.improved_requirement);
-                // Actualizar la interfaz con el requisito mejorado
-                const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
-                listItem.childNodes[0].nodeValue = `${data.improved_requirement}`;
-                requirements[index] = data.improved_requirement; // Actualizar el requisito en el arreglo
-            } else {
-                alert("Error al mejorar el requisito");
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Error al mejorar el requisito");
-        });
-}
-
-function sintetizarRequisito(requirement, index) {
-    fetch('/sintetizar_requisito', {
+function analyzeRequisito(requirement, index) {
+    fetch('/analyze_requisito', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -208,14 +156,20 @@ function sintetizarRequisito(requirement, index) {
     .then(response => response.json())
     .then(data => {
         if (data.result === "ok") {
-            alert("Requisito sintetizado: " + data.sintetizado);
-            // Actualizar la interfaz con el requisito sintetizado
-            const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
-            listItem.childNodes[0].nodeValue = `${data.sintetizado}`;
-            requirements[index] = data.sintetizado; // Actualizar el requisito en el arreglo
+            const listItem = document.querySelector(`.popup ul`);
+            const container = document.createElement('ul');
+            const recomendations = data.sintetizado.split("\n");
+            recomendations.forEach(element => {
+                const createItem = document.createElement('li');
+                createItem.appendChild(document.createTextNode(`${element}`));
+                container.appendChild(createItem);
+            });
+            container.style.backgroundColor = 'lightblue';
+            listItem.appendChild(container);
         } else {
             alert("Error al sintetizar el requisito: " + data.message);
         }
+        console.log(data)
     })
     .catch(error => {
         console.error("Error:", error);
@@ -247,7 +201,3 @@ function editarRequisito(index, requirement) {
     listItem.replaceChild(saveButton, editButton);
 }
 
-function eliminarRequisito(index) {
-    const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
-    listItem.parentNode.removeChild(listItem);
-}

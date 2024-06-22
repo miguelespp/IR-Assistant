@@ -115,12 +115,19 @@ img{
     position: fixed;
     top: 50%;
     left: 50%;
+    border-radius: 10px;
     transform: translate(-50%, -50%);
-    background-color: white;
+    background-color: brown;
     padding: 20px;
     border: 1px solid black;
     z-index: 1000;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.requirements-list {
+    display: flex;
+    flex-wrap: wrap;
+
 }
 
 .popup ul {
@@ -134,4 +141,10 @@ img{
 
 .popup button {
     margin-left: 5px;
+    border-radius: 5px;
+
+}
+
+.requirements-list button {
+    flex: 1 0 50%;
 }

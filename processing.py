@@ -5,6 +5,7 @@ import re
 
 client = OpenAI()
 
+
 def improve_and_classify_requirements(text):
     sentences = re.split(r'(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s', text)
 
@@ -37,17 +38,18 @@ def improve_requirement(requirement, classification):
     return response.choices[0].message.content.strip()
 
 
-def sintetizar_requisito(requirement):
+def analyze_requirement(requirement):
     response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "Eres un experto en síntesis de información."},
+            {"role": "system", "content": f"Eres un experto en la especificacion de requisitos."},
             {"role": "user",
-             "content": f"Resumir el siguiente requisito para hacerlo más preciso y corto: {requirement}"}
+             "content": f"Dame las posibles ambigüedades o problemas del requisito {requirement} , en una lista de maximo 3 puntos"}
         ],
-        max_tokens=50,
+        max_tokens=150,
         n=1,
         stop=None,
         temperature=0.7,
     )
     return response.choices[0].message.content.strip()
+    # return [choice.message.content.strip() for choice in response.choices]
