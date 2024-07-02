@@ -2,6 +2,7 @@ openai==1.34.0
 openai-whisper==20231117
 python-dotenv==1.0.1
 flask==3.0.3
-numpy==1.24.1
+numpy==1.26.4
 pygame
 fakeyou
+azure-cognitiveservices-speech

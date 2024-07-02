@@ -4,6 +4,7 @@ from pygame import mixer
 import fakeyou
 
 
+
 class Talk:
     def __init__(self, username, password, model_name):
         self.username = username

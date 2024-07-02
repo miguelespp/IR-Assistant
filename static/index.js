@@ -181,9 +181,9 @@ function editarRequisito(index, requirement) {
     const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
     const currentText = requirement;
 
-    // Crear un campo de texto para editar el requisito
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
+    // Crear un campo de texto más grande para editar el requisito
+    const inputField = document.createElement('textarea');
+    inputField.className = 'edit-field';  // Añadir una clase para aplicar estilos
     inputField.value = currentText;
     listItem.replaceChild(inputField, listItem.childNodes[0]);
 
@@ -200,4 +200,3 @@ function editarRequisito(index, requirement) {
     const editButton = listItem.childNodes[1];
     listItem.replaceChild(saveButton, editButton);
 }
-

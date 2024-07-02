@@ -1,12 +1,11 @@
-
-body{
+body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: cadetblue;
 }
 
-.header{
+.header {
     text-align: center;
     font-family: Arial, sans-serif;
     background-color: bisque;
@@ -15,18 +14,21 @@ body{
     padding: 4px;
     border-radius: 5px;
 }
-.encapsule{
+
+.encapsule {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: 100px;
     justify-content: center;
-    align-items: center;
 }
-.icon{
+
+.icon {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
-    height: 300px;
+    width: 300px; /* Tamaño del micrófono en pantalla grande */
+    height: 300px; /* Tamaño del micrófono en pantalla grande */
     background-color: white;
     border-radius: 100%;
     border: 0;
@@ -43,19 +45,17 @@ body{
     transform: translateY(7px);
 }
 
-.icon:hover{
+.icon:hover {
     background-color: lightgray;
 }
 
-img{
+img {
     width: 75%;
     height: 75%;
     object-fit: cover;
 }
 
-
-
-#text-box{
+#text-box {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,28 +65,30 @@ img{
     background-color: white;
     height: fit-content;
 }
-#RF-space{
+
+#RF-space, #RNF-space {
     font-size: xx-large;
-    width: 50%;
+    width: 50%; /* Ancho de los espacios de requisitos en pantalla grande */
     height: min(320px);
     background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/static/images/RF.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
 }
-#data1Display, #data2Display{
-    text-align: center;
- }
 
-#RNF-space{
-    font-size: xx-large;
-    width: 50%;
-    height: min(320px);
+#RF-space {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/static/images/RF.jpg');
+}
+
+#RNF-space {
     background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('/static/images/RNF.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
-#RF-list, #RNF-list{
+#data1Display, #data2Display {
+    text-align: center;
+}
+
+#RF-list, #RNF-list {
     list-style-type: none;
     padding-inline: 0;
     font-size: medium;
@@ -95,7 +97,7 @@ img{
     border-radius: 5px;
 }
 
-.RF, .RNF{
+.RF, .RNF {
     list-style-type: none;
     padding-inline: 0;
     font-size: medium;
@@ -104,9 +106,11 @@ img{
     padding: 4px;
     border-radius: 5px;
 }
+
 .RF {
     background-color: brown;
 }
+
 .RNF {
     background-color: cadetblue;
 }
@@ -117,17 +121,17 @@ img{
     left: 50%;
     border-radius: 10px;
     transform: translate(-50%, -50%);
-    background-color: brown;
+    background-color: rgb(42, 165, 58);
     padding: 20px;
     border: 1px solid black;
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 70%;
 }
 
 .requirements-list {
     display: flex;
     flex-wrap: wrap;
-
 }
 
 .popup ul {
@@ -142,9 +146,71 @@ img{
 .popup button {
     margin-left: 5px;
     border-radius: 5px;
-
 }
 
 .requirements-list button {
     flex: 1 0 50%;
+}
+
+.edit-field {
+    width: 100%;
+    height: 100px; /* Ajusta este valor para cambiar la altura del campo de texto */
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .encapsule {
+        flex-direction: column;
+        margin: 50px;
+    }
+
+    .icon {
+        width: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        height: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        margin-top: 50px;
+    }
+
+    #text-box {
+        margin-inline: 5%;
+    }
+
+    #RF-space, #RNF-space {
+        width: 100%; /* Ancho de los espacios de requisitos en pantallas pequeñas */
+        height: auto;
+        background-size: contain;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+
+    .popup {
+        width: 80%;
+    }
+
+    .edit-field {
+        height: 150px; /* Ajusta este valor para cambiar la altura del campo de texto en pantallas pequeñas */
+    }
+}
+
+@media (orientation: portrait) {
+    .icon {
+        width: 450px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        height: 450px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        margin-top: 150px;
+    }
+
+    #RF-space, #RNF-space {
+        width: 100%; /* Ancho de los espacios de requisitos en orientación vertical */
+        height: 100vw;
+    }
+
+    .edit-field {
+        height: 150px; /* Ajusta este valor para cambiar la altura del campo de texto en orientación vertical */
+    }
 }
