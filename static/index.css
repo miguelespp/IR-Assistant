@@ -27,8 +27,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px; /* Tamaño del micrófono en pantalla grande */
-    height: 300px; /* Tamaño del micrófono en pantalla grande */
+    width: 300px; /* Ancho del botón */
+    height: 300px; /* Altura del botón */
     background-color: white;
     border-radius: 100%;
     border: 0;
@@ -36,6 +36,31 @@ body {
     -moz-transition: all 0.1s;
     -o-transition: all 0.1s;
     transition: all 0.1s;
+    position: relative; /* Añadir posición relativa para usar como referencia */
+    overflow: hidden; /* Ocultar el desbordamiento para asegurar que no haya partes visibles del GIF fuera del botón */
+}
+
+#micIcon {
+    position: absolute; /* Añadir posición absoluta para alinear correctamente */
+    top: 0;
+    left: 0;
+    width: 100%; /* Utilizar el 100% del ancho del botón */
+    height: 100%; /* Utilizar el 100% de la altura del botón */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#micIcon .gif {
+    width: 1%; /* Tamaño del GIF (50% del contenedor micIcon) */
+    height: auto; /* Ajustar la altura automáticamente */
+    object-fit: contain; /* Ajustar el comportamiento de relleno del GIF */
+    position: absolute; /* Añadir posición absoluta para alinear correctamente */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .icon:active {
@@ -160,6 +185,7 @@ img {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
 
 /* Estilos responsivos */
 @media (max-width: 768px) {

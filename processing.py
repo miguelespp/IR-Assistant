@@ -4,6 +4,7 @@ from openai import OpenAI
 import re
 
 
+
 #from elevenlabs import text_to_speech, play_and_delete_audio
 
 from azureTTS import text_to_speech, play_and_delete_audio
@@ -48,12 +49,12 @@ def analyze_requirement(requirement):
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "Eres un analista de requisitos flexible y comprensivo."},
-                {"role": "user", "content": f"Soy un cliente no muy experto en el desarrollo de software. Ten en cuenta eso y sé flexible: ¿El siguiente requisito es ambiguo? (sin ser estricto): {requirement}. SI NO ES AMBIGUO DI 'Ta bien'; Si es muy ambiguo, formula una pregunta que no sea de sí o no para aclarar el requisito, sin hacer preguntas implícitamente respondidas en el requisito y manteniéndolo simple."}
+                {"role": "user", "content": f"Soy un cliente no muy experto en el desarrollo de software. Ten en cuenta eso y sé flexible: ¿El siguiente requisito es ambiguo? (sin ser estricto): {requirement}. SI NO ES AMBIGUO DI 'Ta bien'; Si es muy ambiguo, formula una pregunta que no sea de sí o no para aclarar el requisito, sin hacer preguntas implícitamente respondidas en el requisito y manteniéndolo simple (no deves decir si es ambiguo o no solo las preguntas en caso lo sea)."}
             ],
-            max_tokens=40,
+            max_tokens=45,
             n=1,
             stop=None,
-            temperature=0.7,
+            temperature=0.7, # Reducimos la temperatura para obtener respuestas más precisas
         )
         owa = response.choices[0].message.content.strip()
         # Hablar el texto transcrito usando azure
