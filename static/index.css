@@ -60,6 +60,31 @@ body {
     align-items: center;
 }
 
+/* Tema oscuro */
+.dark-theme {
+    background-color: #393c73;
+    background-image: url("images/bg-dark.jpg");
+    color: black;
+}
+
+/* Tema claro */
+.light-theme {
+    background-color: white;
+    background-image: url("images/bg.jpg");
+    color: black;
+}
+
+#toggle-theme {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: rgb(51, 51, 51);
+    width: fit-content;
+    color: white;
+    cursor: pointer;
+    box-shadow: inset 4px 4px 6px #393c73,
+                inset -4px -4px 6px #733965;
+}
+
 
 
 #micIcon .gif {
