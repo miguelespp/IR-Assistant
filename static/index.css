@@ -2,17 +2,26 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: cadetblue;
+    background-color: #393c73;
+    background-image: url("images/bg-dark.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .header {
     text-align: center;
     font-family: Arial, sans-serif;
     background-color: bisque;
-    width: fit-content;
+    background-image: url("images/header.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 240px;
+    height: 70px;
     margin-inline: auto;
     padding: 4px;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: 2px solid #4545ba;
 }
 
 .encapsule {
@@ -85,7 +94,7 @@ img {
     justify-content: center;
     align-items: center;
     margin: 50px;
-    margin-inline: 20%;
+    margin-inline: 15%;
     border-radius: 5px;
     background-color: white;
     height: fit-content;
@@ -186,6 +195,23 @@ img {
     border: 1px solid #ccc;
 }
 
+#export-Button {
+    margin: auto auto 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    width: fit-content;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+#export-Button button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
@@ -195,25 +221,18 @@ img {
     }
 
     .icon {
-        width: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
-        height: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
-        margin-top: 50px;
+        width: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        height: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        margin-top: 30px;
     }
 
     #text-box {
         margin-inline: 5%;
     }
 
-    #RF-space, #RNF-space {
-        width: 100%; /* Ancho de los espacios de requisitos en pantallas pequeñas */
-        height: auto;
-        background-size: contain;
-    }
 
-    img {
-        width: 100%;
-        height: auto;
-    }
+
+
 
     .popup {
         width: 80%;
@@ -226,17 +245,26 @@ img {
 
 @media (orientation: portrait) {
     .icon {
-        width: 450px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
-        height: 450px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
-        margin-top: 150px;
+        width: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        height: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+    }
+
+    #text-box {
+        display: grid;
+        grid-template-columns: 1fr;
     }
 
     #RF-space, #RNF-space {
         width: 100%; /* Ancho de los espacios de requisitos en orientación vertical */
-        height: 100vw;
+        min-height: 20vh;
     }
 
     .edit-field {
         height: 150px; /* Ajusta este valor para cambiar la altura del campo de texto en orientación vertical */
+    }
+
+    #export-Button {
+        display: block;
+        margin-top: auto;
     }
 }

@@ -2,12 +2,15 @@ import os
 import time
 import pygame
 import requests
+from dotenv import load_dotenv
 
 from azure.cognitiveservices.speech import SpeechConfig, SpeechSynthesizer, AudioConfig
 
+load_dotenv()
+
 # Configurar Azure TextToSpeech
-subscription_key = ""
-region = ""
+subscription_key = os.getenv("AZURE_TTS_SUBSCRIPTION_KEY")
+region = os.getenv("AZURE_TTS_REGION")
 
 # Inicializar configuración de Azure TTS
 speech_config = SpeechConfig(subscription=subscription_key, region=region)
