@@ -1,12 +1,10 @@
 let clickeado = false;
 let mediaRecorder;
 let audioChunks = [];
-const data = '';
 let requirements = []; // Arreglo global para almacenar los requisitos mejorados
 let classifications = []; // Arreglo global para almacenar las clasificaciones
 
 const boton = document.getElementById('hola');
-
 const micIcon = document.getElementById('micIcon');
 
 // Verifica si el navegador soporta la grabación de audio
@@ -70,14 +68,14 @@ async function enviarAudio(formData) {
 boton.addEventListener("click", function () {
     if (clickeado) {
         boton.style.backgroundColor = 'white';
-        console.log("apagado")
+        console.log("apagado");
         clickeado = false;
         micIcon.innerHTML = '<img src="static/raccoon-dance.gif" alt="Cargando...">'; // Reemplaza 'raccoon-dance.gif' con el nombre de tu archivo GIF
         boton.style.backgroundColor = 'black';
         mediaRecorder.stop();
     } else {
         boton.style.backgroundColor = 'red';
-        console.log("encendido")
+        console.log("encendido");
         clickeado = true;
         mediaRecorder.start();
     }
@@ -94,40 +92,39 @@ function mostrarPopup(requirements, classifications) {
         listItem.dataset.index = i; // Agregamos un atributo de datos para almacenar el índice
 
         const mainContent = document.createElement('p');
-
-        mainContent.innerText = `${requirements[i]}`
+        mainContent.innerText = `${requirements[i]}`;
         listItem.appendChild(mainContent);
-
 
         const addButton = document.createElement('button');
         addButton.innerText = 'Añadir';
         addButton.addEventListener('click', () => {
+            clearAnalysisContainers(); // Limpiar los contenedores de análisis
             agregarRequisito(classifications[i], requirements[i], i);
-            document.body.removeChild(popup);
         });
-
-
 
         const analyzeButton = document.createElement('button');
         analyzeButton.innerText = 'Analizar';
         analyzeButton.addEventListener('click', () => {
+            clearAnalysisContainers(); // Limpiar los contenedores de análisis
             analyzeRequisito(requirements[i], i);
         });
 
         const editButton = document.createElement('button');
         editButton.innerText = 'Editar';
         editButton.addEventListener('click', () => {
+            clearAnalysisContainers(); // Limpiar los contenedores de análisis
             editarRequisito(i, requirements[i]);
         });
 
         const deleteButton = document.createElement('button');
         deleteButton.innerText = 'Descartar';
         deleteButton.addEventListener('click', () => {
-            document.body.removeChild(popup);
+            listItem.remove(); // Remover el requisito de la lista
+            clearAnalysisContainers(); // Limpiar los contenedores de análisis
+            checkPopupEmpty(); // Verificar si el popup está vacío después de eliminar un elemento
         });
 
         listItem.appendChild(addButton);
-
         listItem.appendChild(analyzeButton);
         listItem.appendChild(editButton);
         listItem.appendChild(deleteButton);
@@ -139,17 +136,34 @@ function mostrarPopup(requirements, classifications) {
     document.body.appendChild(popup);
 }
 
+function clearAnalysisContainers() {
+    const analysisContainers = document.querySelectorAll('.analysis-container');
+    analysisContainers.forEach(container => container.remove());
+}
+
 function agregarRequisito(classification, requirement, index) {
     const prefix = classification === 'RF' ? 'RF' : 'RNF';
     const list = document.getElementById(classification + '-list');
+    
     const element = document.createElement('li');
     element.innerText = `${prefix}: ${requirement}`;
     element.className = classification;
     list.append(element);
 
+    // Agregar a los arreglos globales solo si no existe
+    if (!requirements.includes(requirement)) {
+        requirements.push(requirement);
+        classifications.push(classification);
+    }
+
     // Eliminar el requisito de la lista del pop-up
     const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
-    listItem.parentNode.removeChild(listItem);
+    if (listItem) {
+        listItem.remove();
+    }
+
+    // Verificar si el popup está vacío
+    checkPopupEmpty();
 }
 
 function analyzeRequisito(requirement, index) {
@@ -165,6 +179,7 @@ function analyzeRequisito(requirement, index) {
         if (data.result === "ok") {
             const listItem = document.querySelector(`.popup ul`);
             const container = document.createElement('ul');
+            container.className = 'analysis-container';
             const recomendations = data.sintetizado.split("\n");
             recomendations.forEach(element => {
                 const createItem = document.createElement('li');
@@ -176,7 +191,7 @@ function analyzeRequisito(requirement, index) {
         } else {
             alert("Error al sintetizar el requisito: " + data.message);
         }
-        console.log(data)
+        console.log(data);
     })
     .catch(error => {
         console.error("Error:", error);
@@ -208,11 +223,28 @@ function editarRequisito(index, requirement) {
     listItem.replaceChild(saveButton, editButton);
 }
 
+function checkPopupEmpty() {
+    // Verificar si no quedan elementos en la lista del pop-up
+    const remainingItems = document.querySelectorAll('.popup ul li');
+    if (remainingItems.length === 0) {
+        const popup = document.querySelector('.popup');
+        if (popup) {
+            popup.remove();
+        }
+    }
+}
+
 function exportToExcel() {
+    const rfListItems = Array.from(document.querySelectorAll('#RF-list li'));
+    const rnfListItems = Array.from(document.querySelectorAll('#RNF-list li'));
+
+    const rfRequirements = rfListItems.map(item => item.innerText.replace(/^RF: /, ''));
+    const rnfRequirements = rnfListItems.map(item => item.innerText.replace(/^RNF: /, ''));
+
     // Preparar los datos a exportar
     const dataToExport = {
-        improved_requirements: requirements,
-        classifications: classifications
+        improved_requirements: [...rfRequirements, ...rnfRequirements],
+        classifications: [...Array(rfRequirements.length).fill('RF'), ...Array(rnfRequirements.length).fill('RNF')]
     };
 
     fetch('/export_to_excel', {
@@ -238,3 +270,8 @@ function exportToExcel() {
         alert('Error al exportar a Excel');
     });
 }
+
+document.getElementById('toggle-theme').addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    document.body.classList.toggle('light-theme');
+});
