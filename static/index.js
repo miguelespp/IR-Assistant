@@ -7,6 +7,8 @@ let classifications = []; // Arreglo global para almacenar las clasificaciones
 
 const boton = document.getElementById('hola');
 
+const micIcon = document.getElementById('micIcon');
+
 // Verifica si el navegador soporta la grabación de audio
 if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
     console.log("Tu navegador no soporta la grabación de audio");
@@ -34,8 +36,11 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                         if (data && data.classifications && data.classifications.length > 0 && data.classifications[0] !== 'No Clasificado') {
                             requirements = data.improved_requirements; // Almacenar los requisitos mejorados
                             classifications = data.classifications; // Almacenar las clasificaciones
+                            boton.style.backgroundColor = 'white';
+                            micIcon.innerHTML = '<img class="micro" src="static/microphone.png" alt="wasa">';
                             mostrarPopup(data.improved_requirements, data.classifications);
                         } else {
+                            micIcon.innerHTML = '<img class="micro" src="static/microphone.png" alt="wasa">';
                             alert("No se ha podido clasificar el audio");
                         }
                     })
@@ -67,6 +72,8 @@ boton.addEventListener("click", function () {
         boton.style.backgroundColor = 'white';
         console.log("apagado")
         clickeado = false;
+        micIcon.innerHTML = '<img src="static/raccoon-dance.gif" alt="Cargando...">'; // Reemplaza 'raccoon-dance.gif' con el nombre de tu archivo GIF
+        boton.style.backgroundColor = 'black';
         mediaRecorder.stop();
     } else {
         boton.style.backgroundColor = 'red';
@@ -181,9 +188,9 @@ function editarRequisito(index, requirement) {
     const listItem = document.querySelector(`.popup ul li[data-index='${index}']`);
     const currentText = requirement;
 
-    // Crear un campo de texto para editar el requisito
-    const inputField = document.createElement('input');
-    inputField.type = 'text';
+    // Crear un campo de texto más grande para editar el requisito
+    const inputField = document.createElement('textarea');
+    inputField.className = 'edit-field';  // Añadir una clase para aplicar estilos
     inputField.value = currentText;
     listItem.replaceChild(inputField, listItem.childNodes[0]);
 
@@ -201,3 +208,33 @@ function editarRequisito(index, requirement) {
     listItem.replaceChild(saveButton, editButton);
 }
 
+function exportToExcel() {
+    // Preparar los datos a exportar
+    const dataToExport = {
+        improved_requirements: requirements,
+        classifications: classifications
+    };
+
+    fetch('/export_to_excel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToExport)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'requisitos.xlsx'; // Nombre del archivo Excel
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('Error al exportar a Excel:', error);
+        alert('Error al exportar a Excel');
+    });
+}

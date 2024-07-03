@@ -1,14 +1,14 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 import whisper
 from processing import improve_and_classify_requirements, analyze_requirement
+import pandas as pd
+import io
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route("/audio", methods=["POST"])
 def audio():
@@ -39,7 +39,6 @@ def audio():
         print(f"Error procesando el audio: {e}")
         return jsonify({"error": str(e)}), 500
 
-
 @app.route('/analyze_requisito', methods=['POST'])
 def analyze_requisito_endpoint():
     data = request.get_json()
@@ -50,6 +49,33 @@ def analyze_requisito_endpoint():
     except Exception as e:
         return jsonify({"result": "error", "message": str(e)}), 500
 
+@app.route('/export_to_excel', methods=['POST'])
+def export_to_excel():
+    try:
+        data = request.json
+        improved_requirements = data['improved_requirements']
+        classifications = data['classifications']
+
+        df = pd.DataFrame({
+            'Requisito Mejorado': improved_requirements,
+            'Clasificación': classifications
+        })
+
+        output = io.BytesIO()
+        df.to_excel(output, index=False, sheet_name='Requisitos')  # Usamos df.to_excel directamente con el objeto BytesIO
+
+        output.seek(0)
+
+        return send_file(
+            output,
+            mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            as_attachment=True,
+            download_name="requisitos.xlsx"  # Nombre del archivo adjunto que se enviará
+        )
+    
+    except Exception as e:
+        print(f"Error al exportar a Excel: {e}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

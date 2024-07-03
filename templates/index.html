@@ -2,16 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>IR-Assistant</title>
+    <title>TalkToCode</title>
     <link rel="stylesheet" href="static/index.css">
     <link rel="icon" href="static/microphone.png">
 </head>
 <body>
 
-    <h1 class="header">IR-Assistant</h1>
+    <h1 class="header"></h1>
     <div class="encapsule">
         <button class="icon" type="button" id="hola">
-            <img class="micro" src="static/microphone.png" alt="wasa">
+            <div id="micIcon">
+                <img class="micro" src="static/microphone.png" alt="wasa">
+            </div>
         </button>
     </div>
     <div id="text-box">
@@ -27,6 +29,9 @@
 
             </ul>
         </div>
+    </div>
+    <div id="export-Button">
+        <button onclick="exportToExcel()">Exportar Requisitos a Excel</button>
     </div>
     <script src="static/index.js"></script>
 
