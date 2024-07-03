@@ -155,12 +155,14 @@ img {
     left: 50%;
     border-radius: 10px;
     transform: translate(-50%, -50%);
-    background-color: rgb(42, 165, 58);
+    background-color: rgba(17, 81, 205, 0.85);
     padding: 20px;
     border: 1px solid black;
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 70%;
+    width: 40%;
+    font-family: Consolas, monospace;
+    font-weight: bolder;
 }
 
 .requirements-list {
@@ -180,6 +182,9 @@ img {
 .popup button {
     margin-left: 5px;
     border-radius: 5px;
+    padding: 5px;
+    background-color: #e31919;
+    font-family: "JetBrains Mono SemiBold", monospace;
 }
 
 .requirements-list button {
@@ -187,10 +192,11 @@ img {
 }
 
 .edit-field {
-    width: 100%;
-    height: 100px; /* Ajusta este valor para cambiar la altura del campo de texto */
+    width: 95%;
+    height: fit-content; /* Ajusta este valor para cambiar la altura del campo de texto */
     font-size: 1em;
     padding: 10px;
+    margin-inline: auto;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
