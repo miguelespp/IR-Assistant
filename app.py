@@ -56,21 +56,24 @@ def export_to_excel():
         improved_requirements = data['improved_requirements']
         classifications = data['classifications']
 
+        # Crear un DataFrame con todos los requisitos acumulados
         df = pd.DataFrame({
             'Requisito Mejorado': improved_requirements,
             'Clasificación': classifications
         })
 
+        # Crear un objeto BytesIO para almacenar el archivo Excel
         output = io.BytesIO()
-        df.to_excel(output, index=False, sheet_name='Requisitos')  # Usamos df.to_excel directamente con el objeto BytesIO
-
+        writer = pd.ExcelWriter(output, engine='xlsxwriter')
+        df.to_excel(writer, index=False, sheet_name='Requisitos')
+        writer.close()  # Usamos writer.close() en lugar de writer.save()
         output.seek(0)
 
         return send_file(
             output,
             mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             as_attachment=True,
-            download_name="requisitos.xlsx"  # Nombre del archivo adjunto que se enviará
+            download_name="requisitos.xlsx"
         )
     
     except Exception as e:
