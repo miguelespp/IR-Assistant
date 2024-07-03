@@ -207,3 +207,34 @@ function editarRequisito(index, requirement) {
     const editButton = listItem.childNodes[1];
     listItem.replaceChild(saveButton, editButton);
 }
+
+function exportToExcel() {
+    // Preparar los datos a exportar
+    const dataToExport = {
+        improved_requirements: requirements,
+        classifications: classifications
+    };
+
+    fetch('/export_to_excel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToExport)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = 'requisitos.xlsx'; // Nombre del archivo Excel
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+        console.error('Error al exportar a Excel:', error);
+        alert('Error al exportar a Excel');
+    });
+}
