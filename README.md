@@ -27,7 +27,7 @@ Esta aplicación consiste en un asistente virtual que escucha conversaciones y e
     cd IR-Assistant
     ```
 
-2. Crea un entorno virtual e instala las dependencias:
+2. Crea un entorno virtual (virtualenv) e instala las dependencias (de preferencia manualmente con pip install):
 
     ```bash
     python3 -m venv env
@@ -36,6 +36,11 @@ Esta aplicación consiste en un asistente virtual que escucha conversaciones y e
     ```
 
 3. Configura las variables de entorno necesarias (API keys, configuración del modelo, etc.) en un archivo `.env` en la raíz del proyecto.
+    ```bash
+    openai_api_key
+    AZURE_TTS_SUBSCRIPTION_KEY
+    AZURE_TTS_REGION
+    ```
 
 4. Inicia la aplicación:
 

@@ -74,18 +74,27 @@ body {
     color: black;
 }
 
+#toggle-theme-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 #toggle-theme {
-    padding: 5px;
+    padding: 10px 20px;
     border-radius: 5px;
     background-color: rgb(51, 51, 51);
-    width: fit-content;
     color: white;
     cursor: pointer;
     box-shadow: inset 4px 4px 6px #393c73,
                 inset -4px -4px 6px #733965;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
+#toggle-theme:hover {
+    background-color: rgb(100, 100, 100);
+}
 
 #micIcon .gif {
     width: 1%; /* Tamaño del GIF (50% del contenedor micIcon) */
@@ -243,7 +252,6 @@ img {
     cursor: pointer;
 }
 
-
 /* Estilos responsivos */
 @media (max-width: 768px) {
     .encapsule {
@@ -252,8 +260,8 @@ img {
     }
 
     .icon {
-        width: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
-        height: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        width: 200px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        height: 200px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
         margin-top: 30px;
     }
 
@@ -261,9 +269,16 @@ img {
         margin-inline: 5%;
     }
 
+    #toggle-theme-container {
+        justify-content: center;
+        margin-top: 10px;
+    }
 
-
-
+    #toggle-theme {
+        width: auto; /* Ajusta el ancho del botón en pantallas pequeñas */
+        padding: 10px 20px;
+        font-size: 1em;
+    }
 
     .popup {
         width: 80%;
@@ -276,8 +291,8 @@ img {
 
 @media (orientation: portrait) {
     .icon {
-        width: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
-        height: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        width: 250px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        height: 250px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
     }
 
     #text-box {

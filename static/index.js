@@ -38,6 +38,7 @@ if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                             micIcon.innerHTML = '<img class="micro" src="static/microphone.png" alt="wasa">';
                             mostrarPopup(data.improved_requirements, data.classifications);
                         } else {
+                            boton.style.backgroundColor = 'white';
                             micIcon.innerHTML = '<img class="micro" src="static/microphone.png" alt="wasa">';
                             alert("No se ha podido clasificar el audio");
                         }
