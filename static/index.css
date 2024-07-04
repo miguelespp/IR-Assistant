@@ -60,7 +60,41 @@ body {
     align-items: center;
 }
 
+/* Tema oscuro */
+.dark-theme {
+    background-color: #393c73;
+    background-image: url("images/bg-dark.jpg");
+    color: black;
+}
 
+/* Tema claro */
+.light-theme {
+    background-color: white;
+    background-image: url("images/bg.jpg");
+    color: black;
+}
+
+#toggle-theme-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+#toggle-theme {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: rgb(51, 51, 51);
+    color: white;
+    cursor: pointer;
+    box-shadow: inset 4px 4px 6px #393c73,
+                inset -4px -4px 6px #733965;
+    font-size: 1em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#toggle-theme:hover {
+    background-color: rgb(100, 100, 100);
+}
 
 #micIcon .gif {
     width: 1%; /* Tamaño del GIF (50% del contenedor micIcon) */
@@ -155,12 +189,14 @@ img {
     left: 50%;
     border-radius: 10px;
     transform: translate(-50%, -50%);
-    background-color: rgb(42, 165, 58);
+    background-color: rgba(17, 81, 205, 0.85);
     padding: 20px;
     border: 1px solid black;
     z-index: 1000;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 70%;
+    width: 40%;
+    font-family: Consolas, monospace;
+    font-weight: bolder;
 }
 
 .requirements-list {
@@ -180,6 +216,9 @@ img {
 .popup button {
     margin-left: 5px;
     border-radius: 5px;
+    padding: 5px;
+    background-color: #e31919;
+    font-family: "JetBrains Mono SemiBold", monospace;
 }
 
 .requirements-list button {
@@ -187,10 +226,11 @@ img {
 }
 
 .edit-field {
-    width: 100%;
-    height: 100px; /* Ajusta este valor para cambiar la altura del campo de texto */
+    width: 95%;
+    height: fit-content; /* Ajusta este valor para cambiar la altura del campo de texto */
     font-size: 1em;
     padding: 10px;
+    margin-inline: auto;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
@@ -212,7 +252,6 @@ img {
     cursor: pointer;
 }
 
-
 /* Estilos responsivos */
 @media (max-width: 768px) {
     .encapsule {
@@ -221,8 +260,8 @@ img {
     }
 
     .icon {
-        width: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
-        height: 300px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        width: 200px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
+        height: 200px; /* Ajusta este valor para cambiar el tamaño del micrófono en pantallas pequeñas */
         margin-top: 30px;
     }
 
@@ -230,9 +269,16 @@ img {
         margin-inline: 5%;
     }
 
+    #toggle-theme-container {
+        justify-content: center;
+        margin-top: 10px;
+    }
 
-
-
+    #toggle-theme {
+        width: auto; /* Ajusta el ancho del botón en pantallas pequeñas */
+        padding: 10px 20px;
+        font-size: 1em;
+    }
 
     .popup {
         width: 80%;
@@ -245,8 +291,8 @@ img {
 
 @media (orientation: portrait) {
     .icon {
-        width: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
-        height: 400px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        width: 250px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
+        height: 250px; /* Ajusta este valor para cambiar el tamaño del micrófono en orientación vertical */
     }
 
     #text-box {
