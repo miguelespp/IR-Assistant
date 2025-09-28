@@ -1,0 +1,16 @@
+[project]
+name = "ir-assistant"
+version = "1.0.0"
+description = "IR Assistant: Asistente de recuperación de información"
+authors = [{name="Miguel Espinoza"}]
+dependencies = [
+    "flask==3.0.3",
+    "requests==2.32.3",
+    "scikit-learn==1.5.2"
+]
+
+[tool.black]
+line-length = 88
+
+[tool.flake8]
+max-line-length = 88

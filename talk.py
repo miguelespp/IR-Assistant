@@ -4,7 +4,6 @@ from pygame import mixer
 import fakeyou
 
 
-
 class Talk:
     def __init__(self, username, password, model_name):
         self.username = username
@@ -17,11 +16,11 @@ class Talk:
         self.fake_you.login(self.username, self.password)
 
     def __generate_audio(self, text):
-            tts_model_token = "weight_s0zjjkmht28dp4gm83e6xvjdk"
-            locucion = self.fake_you.say(text=text, ttsModelToken=tts_model_token)
-            locucion.save("temp.wav")
-            filename = "temp.wav"
-            return filename
+        tts_model_token = "weight_s0zjjkmht28dp4gm83e6xvjdk"
+        locucion = self.fake_you.say(text=text, ttsModelToken=tts_model_token)
+        locucion.save("temp.wav")
+        filename = "temp.wav"
+        return filename
 
     def talk(self, text):
         mixer.init()
